@@ -1,0 +1,15 @@
+python3 -m lerobot.record \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM1 \
+    --robot.id=follower \
+    --robot.cameras="{ wrist: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}}" \
+    --teleop.type=so100_leader \
+    --teleop.port=/dev/ttyACM0 \
+    --teleop.id=leader \
+    --display_data=true \
+    --dataset.repo_id=frk2/pickyellowdropblue5 \
+    --dataset.num_episodes=10 \
+    --dataset.single_task="Pick up yellow cube and drop it in the blue rectangular bin" \
+    --dataset.episode_time_s=12 \
+    --dataset.reset_time_s=4 \
+    --dataset.push_to_hub=true

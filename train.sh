@@ -1,0 +1,1 @@
+python3 lerobot/scripts/train.py   --policy.path=lerobot/smolvla_base   --dataset.repo_id=frk2/pickyellowdropblue5  --batch_size=64   --steps=20000   --output_dir=outputs/train/my_smolvla4   --job_name=my_smolvla_training   --policy.device=cuda   --wandb.enable=true --save_freq=1000

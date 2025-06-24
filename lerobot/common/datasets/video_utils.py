@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any, ClassVar
 
 import av
+import av.logging
 import pyarrow as pa
 import torch
 import torchvision
@@ -254,6 +255,7 @@ def encode_video_frames(
     log_level: int | None = av.logging.ERROR,
     overwrite: bool = False,
 ) -> None:
+    # log_level = av.logging.DEBUG
     """More info on ffmpeg arguments tuning on `benchmark/video/README.md`"""
     # Check encoder availability
     if vcodec not in ["h264", "hevc", "libsvtav1"]:
@@ -311,11 +313,16 @@ def encode_video_frames(
 
         # Loop through input frames and encode them
         for input_data in input_list:
-            input_image = Image.open(input_data).convert("RGB")
-            input_frame = av.VideoFrame.from_image(input_image)
-            packet = output_stream.encode(input_frame)
-            if packet:
-                output.mux(packet)
+            try:
+                input_image = Image.open(input_data).convert("RGB")
+                input_frame = av.VideoFrame.from_image(input_image)
+                packet = output_stream.encode(input_frame)
+                if packet:
+                    output.mux(packet)
+            except Exception as e:
+                print("Exception trying to open {input_data} ",e)
+                continue
+
 
         # Flush the encoder
         packet = output_stream.encode()

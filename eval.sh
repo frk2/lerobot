@@ -1,0 +1,11 @@
+python3 -m lerobot.record \
+--robot.type=so101_follower \
+--robot.port=/dev/ttyACM1 \
+--robot.id=follower \
+--robot.cameras="{ wrist: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}}" \
+--dataset.single_task="pick up yellow cube and put it in the blue rectangular bin" \
+--dataset.repo_id=frk2/eval_pickyellowdropblue5 \
+--dataset.episode_time_s=200 \
+--dataset.num_episodes=10 \
+--display_data=true \
+--policy.path=outputs/train/my_smolvla4/checkpoints/last/pretrained_model/
